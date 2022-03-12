@@ -1,21 +1,10 @@
 import logging
 import sys
 
-from flask import Flask, request, abort, jsonify
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
+from flask import request, abort, jsonify
 
-
-#----------------------------------------------------------------------------#
-# App Config.
-#----------------------------------------------------------------------------#
-
-app = Flask(__name__)
-app.config.from_object('settings')
-
-db = SQLAlchemy(app)
-
-migrate = Migrate(app, db)
+from . import app
+from .models import Genre, TrainingLog
 
 #----------------------------------------------------------------------------#
 # Set Loggings.
@@ -45,6 +34,13 @@ logger.addHandler(handler)
 def index():
     return jsonify({
         'app': 'big3-logger-api'
+    })
+
+@app.route('/genres')
+def get_genres():
+    genres = Genre.query.all()
+    return jsonify({
+        'genres': [genre.name for genre in genres]
     })
 
 # Default port:

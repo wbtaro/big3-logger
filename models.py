@@ -1,35 +1,39 @@
-import datetime
+from datetime import datetime
 
-from app import db
+from . import db
 
-class Genres(db.Model):
+class Genre(db.Model):
+    __tablename__ = 'genres'
+
     id = db.Column(
-        db.intger,
+        db.Integer,
         primary_key=True
     )
-    name = db.Column(db.String, nullabel=False)
+    name = db.Column(db.String, nullable=False)
 
-class TrainingLogs(db.Model):
+class TrainingLog(db.Model):
+    __tablename__ = 'training_logs'
+
     id = db.Column(
-        db.integer,
+        db.Integer,
         primary_key=True
     )
     user = db.Column(db.String, nullable=False)
-    training_date = db.Column(db.Datetime.date(), nullable=False)
+    training_date = db.Column(db.DateTime, nullable=False)
     genre_id = db.Column(
-        db.integer,
-        db.ForeignKey('Genres.id'),
+        db.Integer,
+        db.ForeignKey('genres.id'),
         nullable=False
     )
-    weight = db.Column(db.Int, nullabler=False)
-    reps = db.Column(db.Int, nullable=False)
+    weight = db.Column(db.Integer, nullable=False)
+    reps = db.Column(db.Integer, nullable=False)
     created_at = db.Column(
-        db.Datetime,
+        db.DateTime,
         default=datetime.now(),
         nullable=False
         )
     updated_at = db.Column(
-        db.Datetime,
+        db.DateTime,
         default=datetime.now(),
         nullable=False
         )
